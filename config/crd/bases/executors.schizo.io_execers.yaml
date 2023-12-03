@@ -1,0 +1,57 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.11.1
+  creationTimestamp: null
+  name: execers.executors.schizo.io
+spec:
+  group: executors.schizo.io
+  names:
+    kind: Execer
+    listKind: ExecerList
+    plural: execers
+    singular: execer
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.status
+      name: Status
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Execer is the Schema for the execers API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ExecerSpec defines the desired state of Execer
+            type: object
+          status:
+            description: ExecerStatus defines the observed state of Execer
+            properties:
+              status:
+                description: Conditions store the status conditions of the exec instances
+                  Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge"
+                  patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
+                type: string
+            required:
+            - status
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

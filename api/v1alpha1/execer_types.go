@@ -27,19 +27,21 @@ import (
 type ExecerSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of Execer. Edit execer_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Image   string `json:"image"`
+	// Command string `json:"command"`
 }
 
 // ExecerStatus defines the observed state of Execer
 type ExecerStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// Conditions store the status conditions of the exec instances
+	// +operator-sdk:csv:customresourcedefinitions:type=status
+	// Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
+	Status string `json:"status"`
 }
 
-//+kubebuilder:object:root=true
-//+kubebuilder:subresource:status
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="Status",type=string,JSONPath=`.status.status`
 
 // Execer is the Schema for the execers API
 type Execer struct {
